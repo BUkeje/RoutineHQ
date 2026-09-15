@@ -1,122 +1,152 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showNewMenu, setShowNewMenu] = useState(false);
+  const [showTaskForm, setShowTaskForm] = useState(false);
+
+  const [tasks, setTasks] = useState([]);
+
+  function openNewMenu() {
+    setShowNewMenu(true);
+  }
+
+  function closeNewMenu() {
+    setShowNewMenu(false);
+  }
+
+  function openTaskForm() {
+    setShowNewMenu(false);
+    setShowTaskForm(true);
+  }
+
+  function closeTaskForm() {
+    setShowTaskForm(false);
+  }
+
+  function addTask(taskName) {
+    const newTask = {
+      id: Date.now(),
+      name: taskName,
+      completed: false,
+    };
+
+    setTasks([...tasks, newTask]);
+
+    setShowTaskForm(false);
+  }
+
+  function toggleTask(taskId) {
+  setTasks(
+    tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, completed: !task.completed }
+        : task
+    )
+  );
+}
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <Navbar onNewClick={openNewMenu} />
 
-      <div className="ticks"></div>
+      <Home tasks={tasks} onToggleTask={toggleTask} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {showNewMenu && (
+        <div className="modal-overlay">
+          <div className="new-modal">
+            <h2>Create New</h2>
+            <p>What would you like to create?</p>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+            <div className="new-options">
+              <button className="new-option">
+                <strong>+ New Routine</strong>
+                <span>Create a repeatable set of tasks.</span>
+              </button>
+
+              <button
+                className="new-option"
+                onClick={openTaskForm}
+              >
+                <strong>+ New Task</strong>
+                <span>Create an individual task.</span>
+              </button>
+            </div>
+
+            <button
+              className="cancel-button"
+              onClick={closeNewMenu}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showTaskForm && (
+        <TaskForm
+          onAddTask={addTask}
+          onCancel={closeTaskForm}
+        />
+      )}
     </>
-  )
+  );
 }
 
-export default App
+function TaskForm({ onAddTask, onCancel }) {
+  const [taskName, setTaskName] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (taskName.trim() === "") {
+      return;
+    }
+
+    onAddTask(taskName.trim());
+  }
+
+  return (
+    <div className="modal-overlay">
+      <div className="new-modal">
+        <h2>New Task</h2>
+        <p>Add something you need to get done.</p>
+
+        <form onSubmit={handleSubmit}>
+          <label className="form-label">
+            Task Name
+          </label>
+
+          <input
+            className="task-input"
+            type="text"
+            placeholder="e.g. Work on RoutineHQ"
+            value={taskName}
+            onChange={(event) => setTaskName(event.target.value)}
+            autoFocus
+          />
+
+          <button
+            className="create-task-button"
+            type="submit"
+          >
+            Create Task
+          </button>
+
+          <button
+            className="cancel-button"
+            type="button"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default App;
