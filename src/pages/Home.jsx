@@ -1,7 +1,19 @@
-function Home({ tasks, onToggleTask }) {
+import { useState } from "react";
+
+function Home({ tasks, routines, onToggleTask, onToggleRoutineTask }) {
 const incompleteTasks = tasks.filter(
   (task) => !task.completed
 );
+
+const [expandedRoutine, setExpandedRoutine] = useState(null);
+
+function toggleRoutine(routineId) {
+  setExpandedRoutine(
+    expandedRoutine === routineId
+      ? null
+      : routineId
+  );
+}
 
   return (
     <main className="dashboard">
@@ -13,7 +25,10 @@ const incompleteTasks = tasks.filter(
       <section className="dashboard-overview">
         <div className="dashboard-card">
           <p className="card-label">ROUTINES</p>
-          <h2>3 Active Routines</h2>
+          <h2>
+  {routines.length}{" "}
+  {routines.length === 1 ? "Active Routine" : "Active Routines"}
+</h2>
           <button className="card-link">View Routines →</button>
         </div>
 
@@ -30,6 +45,79 @@ const incompleteTasks = tasks.filter(
       <section className="today-section">
   <h2>Today's Focus</h2>
 
+  <h3 className="focus-label">ROUTINES</h3>
+
+  <div className="focus-card">
+    {routines.length === 0 ? (
+      <div className="empty-tasks">
+        No routines yet. Create your first routine.
+      </div>
+    ) : (
+      routines.map((routine) => {
+  const completedCount = routine.tasks.filter(
+    (task) => task.completed
+  ).length;
+
+  const isExpanded = expandedRoutine === routine.id;
+
+  return (
+    <div
+      className="routine-item"
+      key={routine.id}
+    >
+      <button
+        className="routine-header"
+        onClick={() => toggleRoutine(routine.id)}
+      >
+        <div className="routine-title">
+          <span className="routine-arrow">
+            {isExpanded ? "▾" : "▸"}
+          </span>
+
+          <span>{routine.name}</span>
+        </div>
+
+        <span className="routine-progress">
+          {completedCount} / {routine.tasks.length}
+        </span>
+      </button>
+
+      {isExpanded && (
+        <div className="routine-tasks">
+          {routine.tasks.map((task) => (
+            <div
+              className={`routine-task ${
+                task.completed ? "completed" : ""
+              }`}
+              key={task.id}
+            >
+              <button
+                className="task-checkbox"
+                onClick={() =>
+                  onToggleRoutineTask(
+                    routine.id,
+                    task.id
+                  )
+                }
+              >
+                {task.completed ? "✓" : ""}
+              </button>
+
+              <span className="task-name">
+                {task.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+})
+    )}
+  </div>
+
+  <h3 className="focus-label">TASKS</h3>
+
   <div className="focus-card">
     {tasks.length === 0 ? (
       <div className="empty-tasks">
@@ -37,20 +125,24 @@ const incompleteTasks = tasks.filter(
       </div>
     ) : (
       tasks.map((task) => (
-  <div
-    className={`focus-item ${task.completed ? "completed" : ""}`}
-    key={task.id}
-  >
-    <button
-      className="task-checkbox"
-      onClick={() => onToggleTask(task.id)}
-    >
-      {task.completed ? "✓" : ""}
-    </button>
+        <div
+          className={`focus-item ${
+            task.completed ? "completed" : ""
+          }`}
+          key={task.id}
+        >
+          <button
+            className="task-checkbox"
+            onClick={() => onToggleTask(task.id)}
+          >
+            {task.completed ? "✓" : ""}
+          </button>
 
-    <span className="task-name">{task.name}</span>
-  </div>
-))
+          <span className="task-name">
+            {task.name}
+          </span>
+        </div>
+      ))
     )}
   </div>
 </section>

@@ -203,6 +203,22 @@ main p {
   border-bottom: none;
 }
 
+.focus-label {
+  margin: 22px 0 10px;
+
+  color: #777;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.routine-progress {
+  margin-left: auto;
+
+  color: #888;
+  font-size: 14px;
+}
 
 /* Quick Create */
 
@@ -457,4 +473,131 @@ main p {
 .completed .task-name {
   color: #666;
   text-decoration: line-through;
+}
+
+/* ---------- Routine Form ---------- */
+
+.routine-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.routine-task-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.routine-task-input .task-input {
+  margin-bottom: 0;
+}
+
+.remove-task-button {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  background-color: transparent;
+  color: #888;
+
+  border: 1px solid #38393e;
+  border-radius: 8px;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.remove-task-button:hover {
+  color: white;
+  border-color: #666;
+}
+
+.add-task-field-button {
+  width: 100%;
+
+  margin: 12px 0 16px;
+  padding: 10px;
+
+  background-color: #292a2e;
+  color: #bbb;
+
+  border: 1px solid #38393e;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.add-task-field-button:hover {
+  color: white;
+  border-color: #666;
+}
+
+/* ---------- Expandable Routines ---------- */
+
+.routine-item {
+  border-bottom: 1px solid #303136;
+}
+
+.routine-item:last-child {
+  border-bottom: none;
+}
+
+.routine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 18px 20px;
+
+  background: none;
+  color: #f5f5f5;
+
+  border: none;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.routine-header:hover {
+  background-color: #292a2e;
+}
+
+.routine-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+}
+
+.routine-arrow {
+  width: 14px;
+
+  color: #777;
+  font-size: 13px;
+}
+
+.routine-progress {
+  color: #888;
+  font-size: 14px;
+}
+
+
+/* Tasks inside a routine */
+
+.routine-tasks {
+  padding: 4px 20px 14px 44px;
+}
+
+.routine-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 0;
+
+  color: #bbb;
 }
