@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-function Home({ tasks, routines, onToggleTask, onToggleRoutineTask }) {
+function Home({
+  tasks,
+  routines,
+  onToggleTask,
+  onToggleRoutineTask,
+  onDeleteTask,
+  onDeleteRoutine,
+}) {
 const incompleteTasks = tasks.filter(
   (task) => !task.completed
 );
@@ -65,22 +72,31 @@ function toggleRoutine(routineId) {
       className="routine-item"
       key={routine.id}
     >
-      <button
-        className="routine-header"
-        onClick={() => toggleRoutine(routine.id)}
-      >
-        <div className="routine-title">
-          <span className="routine-arrow">
-            {isExpanded ? "▾" : "▸"}
-          </span>
+      <div className="routine-header">
+  <button
+    className="routine-expand-button"
+    onClick={() => toggleRoutine(routine.id)}
+  >
+    <div className="routine-title">
+      <span className="routine-arrow">
+        {isExpanded ? "▾" : "▸"}
+      </span>
 
-          <span>{routine.name}</span>
-        </div>
+      <span>{routine.name}</span>
+    </div>
 
-        <span className="routine-progress">
-          {completedCount} / {routine.tasks.length}
-        </span>
-      </button>
+    <span className="routine-progress">
+      {completedCount} / {routine.tasks.length}
+    </span>
+  </button>
+
+  <button
+    className="delete-button"
+    onClick={() => onDeleteRoutine(routine.id)}
+  >
+    Delete
+  </button>
+</div>
 
       {isExpanded && (
         <div className="routine-tasks">
@@ -126,22 +142,29 @@ function toggleRoutine(routineId) {
     ) : (
       tasks.map((task) => (
         <div
-          className={`focus-item ${
-            task.completed ? "completed" : ""
-          }`}
-          key={task.id}
-        >
-          <button
-            className="task-checkbox"
-            onClick={() => onToggleTask(task.id)}
-          >
-            {task.completed ? "✓" : ""}
-          </button>
+  className={`focus-item ${
+    task.completed ? "completed" : ""
+  }`}
+  key={task.id}
+>
+  <button
+    className="task-checkbox"
+    onClick={() => onToggleTask(task.id)}
+  >
+    {task.completed ? "✓" : ""}
+  </button>
 
-          <span className="task-name">
-            {task.name}
-          </span>
-        </div>
+  <span className="task-name">
+    {task.name}
+  </span>
+
+  <button
+    className="delete-button"
+    onClick={() => onDeleteTask(task.id)}
+  >
+    Delete
+  </button>
+</div>
       ))
     )}
   </div>

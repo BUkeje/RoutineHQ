@@ -64,6 +64,18 @@ useEffect(() => {
     setShowTaskForm(false);
   }
 
+  function deleteTask(taskId) {
+  setTasks(
+    tasks.filter((task) => task.id !== taskId)
+  );
+}
+
+function deleteRoutine(routineId) {
+  setRoutines(
+    routines.filter((routine) => routine.id !== routineId)
+  );
+}
+
   function toggleTask(taskId) {
     setTasks(
       tasks.map((task) =>
@@ -124,6 +136,8 @@ useEffect(() => {
   routines={routines}
   onToggleTask={toggleTask}
   onToggleRoutineTask={toggleRoutineTask}
+  onDeleteTask={deleteTask}
+  onDeleteRoutine={deleteRoutine}
 />
 
       {showNewMenu && (

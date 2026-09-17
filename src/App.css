@@ -214,7 +214,7 @@ main p {
 }
 
 .routine-progress {
-  margin-left: auto;
+  margin-right: 10px;
 
   color: #888;
   font-size: 14px;
@@ -546,11 +546,19 @@ main p {
 
 .routine-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   width: 100%;
-  padding: 18px 20px;
+  padding: 0 20px;
+}
+
+.routine-expand-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  flex: 1;
+  padding: 18px 0;
 
   background: none;
   color: #f5f5f5;
@@ -561,8 +569,8 @@ main p {
   cursor: pointer;
 }
 
-.routine-header:hover {
-  background-color: #292a2e;
+.routine-expand-button:hover {
+  color: white;
 }
 
 .routine-title {
@@ -585,6 +593,27 @@ main p {
   font-size: 14px;
 }
 
+.delete-button {
+  margin-left: auto;
+  padding: 6px 10px;
+
+  background: transparent;
+  color: #a85f5f;
+
+  border: none;
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #3a2525;
+  color: #ff8a8a;
+}
 
 /* Tasks inside a routine */
 
