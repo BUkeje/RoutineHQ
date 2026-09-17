@@ -106,6 +106,28 @@ function deleteRoutine(routineId) {
   );
 }
 
+function toggleRoutineComplete(routineId) {
+  setRoutines(
+    routines.map((routine) => {
+      if (routine.id !== routineId) {
+        return routine;
+      }
+
+      const allCompleted = routine.tasks.every(
+        (task) => task.completed
+      );
+
+      return {
+        ...routine,
+        tasks: routine.tasks.map((task) => ({
+          ...task,
+          completed: !allCompleted,
+        })),
+      };
+    })
+  );
+}
+
   function openRoutineForm() {
     setShowNewMenu(false);
     setShowRoutineForm(true);
@@ -136,6 +158,7 @@ function deleteRoutine(routineId) {
   routines={routines}
   onToggleTask={toggleTask}
   onToggleRoutineTask={toggleRoutineTask}
+  onToggleRoutineComplete={toggleRoutineComplete}
   onDeleteTask={deleteTask}
   onDeleteRoutine={deleteRoutine}
 />

@@ -5,11 +5,17 @@ function Home({
   routines,
   onToggleTask,
   onToggleRoutineTask,
+  onToggleRoutineComplete,
   onDeleteTask,
   onDeleteRoutine,
 }) {
 const incompleteTasks = tasks.filter(
   (task) => !task.completed
+);
+
+const activeRoutines = routines.filter(
+  (routine) =>
+    !routine.tasks.every((task) => task.completed)
 );
 
 const [expandedRoutine, setExpandedRoutine] = useState(null);
@@ -33,8 +39,10 @@ function toggleRoutine(routineId) {
         <div className="dashboard-card">
           <p className="card-label">ROUTINES</p>
           <h2>
-  {routines.length}{" "}
-  {routines.length === 1 ? "Active Routine" : "Active Routines"}
+  {activeRoutines.length}{" "}
+  {activeRoutines.length === 1
+    ? "Active Routine"
+    : "Active Routines"}
 </h2>
           <button className="card-link">View Routines →</button>
         </div>
@@ -65,6 +73,10 @@ function toggleRoutine(routineId) {
     (task) => task.completed
   ).length;
 
+  const isRoutineCompleted = routine.tasks.every(
+  (task) => task.completed
+);
+
   const isExpanded = expandedRoutine === routine.id;
 
   return (
@@ -72,7 +84,20 @@ function toggleRoutine(routineId) {
       className="routine-item"
       key={routine.id}
     >
-      <div className="routine-header">
+      <div
+  className={`routine-header ${
+    isRoutineCompleted ? "completed" : ""
+  }`}
+>
+  <button
+    className="task-checkbox routine-checkbox"
+    onClick={() =>
+      onToggleRoutineComplete(routine.id)
+    }
+  >
+    {isRoutineCompleted ? "✓" : ""}
+  </button>
+
   <button
     className="routine-expand-button"
     onClick={() => toggleRoutine(routine.id)}

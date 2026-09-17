@@ -213,13 +213,6 @@ main p {
   letter-spacing: 1px;
 }
 
-.routine-progress {
-  margin-right: 10px;
-
-  color: #888;
-  font-size: 14px;
-}
-
 /* Quick Create */
 
 .quick-create {
@@ -534,6 +527,10 @@ main p {
   border-color: #666;
 }
 
+.routine-checkbox {
+  margin-right: 12px;
+}
+
 /* ---------- Expandable Routines ---------- */
 
 .routine-item {
@@ -578,7 +575,7 @@ main p {
   align-items: center;
   gap: 10px;
 
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .routine-arrow {
@@ -589,6 +586,8 @@ main p {
 }
 
 .routine-progress {
+  margin-right: 10px;
+  
   color: #888;
   font-size: 14px;
 }
