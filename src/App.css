@@ -12,10 +12,14 @@ body {
   background-color: #18191b;
   color: #f5f5f5;
 
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
 }
-
 
 /* ---------- Navbar ---------- */
 
@@ -33,7 +37,6 @@ body {
   border-radius: 14px;
 }
 
-
 /* RoutineHQ Logo */
 
 .navbar-logo {
@@ -41,9 +44,8 @@ body {
 
   font-size: 22px;
   font-weight: 700;
-  letter-spacing: -1px
+  letter-spacing: -1px;
 }
-
 
 /* Navbar Links */
 
@@ -67,7 +69,6 @@ body {
   color: #ffffff;
 }
 
-
 /* New Button */
 
 .new-button {
@@ -86,7 +87,6 @@ body {
 .new-button:hover {
   background-color: #dcdcdc;
 }
-
 
 /* ---------- Main Page ---------- */
 
@@ -128,7 +128,6 @@ main p {
   color: #999;
 }
 
-
 /* Overview Cards */
 
 .dashboard-overview {
@@ -169,7 +168,6 @@ main p {
 .card-link:hover {
   color: white;
 }
-
 
 /* Today's Focus */
 
@@ -242,7 +240,9 @@ main p {
   text-align: left;
   cursor: pointer;
 
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .create-card:hover {
@@ -293,7 +293,6 @@ main p {
   color: #999;
 }
 
-
 /* Creation Options */
 
 .new-options {
@@ -333,7 +332,6 @@ main p {
   color: #999;
   font-size: 13px;
 }
-
 
 /* Cancel */
 
@@ -587,7 +585,7 @@ main p {
 
 .routine-progress {
   margin-right: 10px;
-  
+
   color: #888;
   font-size: 14px;
 }
@@ -606,7 +604,9 @@ main p {
   font-weight: 500;
   cursor: pointer;
 
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .delete-button:hover {
@@ -628,4 +628,129 @@ main p {
   padding: 10px 0;
 
   color: #bbb;
+}
+
+/* ---------- Routines Page ---------- */
+
+.routines-page {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 32px 60px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #999;
+}
+
+.routines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.routine-page-card {
+  padding: 20px;
+
+  background-color: #222326;
+
+  border: 1px solid #303136;
+  border-radius: 14px;
+}
+
+.routine-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routine-page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.routine-page-title h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.routine-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.routine-page-tasks {
+  margin-top: 16px;
+  padding-top: 12px;
+
+  border-top: 1px solid #303136;
+}
+
+.empty-page {
+  padding: 50px;
+
+  background-color: #222326;
+
+  border: 1px solid #303136;
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+.empty-page h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.empty-page p {
+  margin: 0;
+  color: #888;
+}
+
+/* ---------- Tasks Page ---------- */
+
+.tasks-page {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 32px 60px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-page-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 20px;
+
+  background-color: #222326;
+  border: 1px solid #303136;
+  border-radius: 14px;
+}
+
+.task-page-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

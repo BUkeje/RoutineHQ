@@ -1,39 +1,36 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Routines from "./pages/Routines";
+import Tasks from "./pages/Tasks";
 
 function App() {
   const [showNewMenu, setShowNewMenu] = useState(false);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [showRoutineForm, setShowRoutineForm] = useState(false);
-  
+
   const [tasks, setTasks] = useState(() => {
-  const savedTasks = localStorage.getItem("tasks");
+    const savedTasks = localStorage.getItem("tasks");
 
-  return savedTasks ? JSON.parse(savedTasks) : [];
-});
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
-const [routines, setRoutines] = useState(() => {
-  const savedRoutines = localStorage.getItem("routines");
+  const [routines, setRoutines] = useState(() => {
+    const savedRoutines = localStorage.getItem("routines");
 
-  return savedRoutines ? JSON.parse(savedRoutines) : [];
-});
+    return savedRoutines ? JSON.parse(savedRoutines) : [];
+  });
 
-useEffect(() => {
-  localStorage.setItem(
-    "tasks",
-    JSON.stringify(tasks)
-  );
-}, [tasks]);
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-useEffect(() => {
-  localStorage.setItem(
-    "routines",
-    JSON.stringify(routines)
-  );
-}, [routines]);
+  useEffect(() => {
+    localStorage.setItem("routines", JSON.stringify(routines));
+  }, [routines]);
 
   function openNewMenu() {
     setShowNewMenu(true);
@@ -65,68 +62,60 @@ useEffect(() => {
   }
 
   function deleteTask(taskId) {
-  setTasks(
-    tasks.filter((task) => task.id !== taskId)
-  );
-}
+    setTasks(tasks.filter((task) => task.id !== taskId));
+  }
 
-function deleteRoutine(routineId) {
-  setRoutines(
-    routines.filter((routine) => routine.id !== routineId)
-  );
-}
+  function deleteRoutine(routineId) {
+    setRoutines(routines.filter((routine) => routine.id !== routineId));
+  }
 
   function toggleTask(taskId) {
     setTasks(
       tasks.map((task) =>
-        task.id === taskId
-          ? { ...task, completed: !task.completed }
-          : task
-      )
+        task.id === taskId ? { ...task, completed: !task.completed } : task,
+      ),
     );
   }
 
   function toggleRoutineTask(routineId, taskId) {
-  setRoutines(
-    routines.map((routine) =>
-      routine.id === routineId
-        ? {
-            ...routine,
-            tasks: routine.tasks.map((task) =>
-              task.id === taskId
-                ? {
-                    ...task,
-                    completed: !task.completed,
-                  }
-                : task
-            ),
-          }
-        : routine
-    )
-  );
-}
+    setRoutines(
+      routines.map((routine) =>
+        routine.id === routineId
+          ? {
+              ...routine,
+              tasks: routine.tasks.map((task) =>
+                task.id === taskId
+                  ? {
+                      ...task,
+                      completed: !task.completed,
+                    }
+                  : task,
+              ),
+            }
+          : routine,
+      ),
+    );
+  }
 
-function toggleRoutineComplete(routineId) {
-  setRoutines(
-    routines.map((routine) => {
-      if (routine.id !== routineId) {
-        return routine;
-      }
+  function toggleRoutineComplete(routineId) {
+    setRoutines(
+      routines.map((routine) => {
+        if (routine.id !== routineId) {
+          return routine;
+        }
 
-      const allCompleted = routine.tasks.every(
-        (task) => task.completed
-      );
+        const allCompleted = routine.tasks.every((task) => task.completed);
 
-      return {
-        ...routine,
-        tasks: routine.tasks.map((task) => ({
-          ...task,
-          completed: !allCompleted,
-        })),
-      };
-    })
-  );
-}
+        return {
+          ...routine,
+          tasks: routine.tasks.map((task) => ({
+            ...task,
+            completed: !allCompleted,
+          })),
+        };
+      }),
+    );
+  }
 
   function openRoutineForm() {
     setShowNewMenu(false);
@@ -151,65 +140,81 @@ function toggleRoutineComplete(routineId) {
 
   return (
     <>
-      <Navbar onNewClick={openNewMenu} />
+      <BrowserRouter>
+        <Navbar onNewClick={openNewMenu} />
 
-      <Home
-  tasks={tasks}
-  routines={routines}
-  onToggleTask={toggleTask}
-  onToggleRoutineTask={toggleRoutineTask}
-  onToggleRoutineComplete={toggleRoutineComplete}
-  onDeleteTask={deleteTask}
-  onDeleteRoutine={deleteRoutine}
-/>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                tasks={tasks}
+                routines={routines}
+                onToggleTask={toggleTask}
+                onToggleRoutineTask={toggleRoutineTask}
+                onToggleRoutineComplete={toggleRoutineComplete}
+                onDeleteTask={deleteTask}
+                onDeleteRoutine={deleteRoutine}
+                onNewTask={openTaskForm}
+              />
+            }
+          />
+          <Route
+            path="/routines"
+            element={
+              <Routines
+                routines={routines}
+                onToggleRoutineTask={toggleRoutineTask}
+                onToggleRoutineComplete={toggleRoutineComplete}
+                onDeleteRoutine={deleteRoutine}
+              />
+            }
+          />
+          <Route
+            path="/tasks"
+            element={
+              <Tasks
+                tasks={tasks}
+                onToggleTask={toggleTask}
+                onDeleteTask={deleteTask}
+              />
+            }
+          />
+        </Routes>
 
-      {showNewMenu && (
-        <div className="modal-overlay">
-          <div className="new-modal">
-            <h2>Create New</h2>
-            <p>What would you like to create?</p>
+        {showNewMenu && (
+          <div className="modal-overlay">
+            <div className="new-modal">
+              <h2>Create New</h2>
+              <p>What would you like to create?</p>
 
-            <div className="new-options">
-              <button
-  className="new-option"
-  onClick={openRoutineForm}
->
-  <strong>+ New Routine</strong>
-  <span>Create a repeatable set of tasks.</span>
-</button>
+              <div className="new-options">
+                <button className="new-option" onClick={openRoutineForm}>
+                  <strong>+ New Routine</strong>
+                  <span>Create a repeatable set of tasks.</span>
+                </button>
 
-              <button
-                className="new-option"
-                onClick={openTaskForm}
-              >
-                <strong>+ New Task</strong>
-                <span>Create an individual task.</span>
+                <button className="new-option" onClick={openTaskForm}>
+                  <strong>+ New Task</strong>
+                  <span>Create an individual task.</span>
+                </button>
+              </div>
+
+              <button className="cancel-button" onClick={closeNewMenu}>
+                Cancel
               </button>
             </div>
-
-            <button
-              className="cancel-button"
-              onClick={closeNewMenu}
-            >
-              Cancel
-            </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {showTaskForm && (
-        <TaskForm
-          onAddTask={addTask}
-          onCancel={closeTaskForm}
-        />
-      )}
+        {showTaskForm && (
+          <TaskForm onAddTask={addTask} onCancel={closeTaskForm} />
+        )}
 
-      {showRoutineForm && (
-        <RoutineForm
-          onAddRoutine={addRoutine}
-          onCancel={closeRoutineForm}
-        />
-      )}
+        {showRoutineForm && (
+          <RoutineForm onAddRoutine={addRoutine} onCancel={closeRoutineForm} />
+        )}
+      </BrowserRouter>
     </>
   );
 }
@@ -234,9 +239,7 @@ function TaskForm({ onAddTask, onCancel }) {
         <p>Add something you need to get done.</p>
 
         <form onSubmit={handleSubmit}>
-          <label className="form-label">
-            Task Name
-          </label>
+          <label className="form-label">Task Name</label>
 
           <input
             className="task-input"
@@ -247,18 +250,11 @@ function TaskForm({ onAddTask, onCancel }) {
             autoFocus
           />
 
-          <button
-            className="create-task-button"
-            type="submit"
-          >
+          <button className="create-task-button" type="submit">
             Create Task
           </button>
 
-          <button
-            className="cancel-button"
-            type="button"
-            onClick={onCancel}
-          >
+          <button className="cancel-button" type="button" onClick={onCancel}>
             Cancel
           </button>
         </form>
@@ -285,7 +281,7 @@ function RoutineForm({ onAddRoutine, onCancel }) {
 
   function removeTaskField(index) {
     const updatedTasks = routineTasks.filter(
-      (_, taskIndex) => taskIndex !== index
+      (_, taskIndex) => taskIndex !== index,
     );
 
     setRoutineTasks(updatedTasks);
@@ -320,41 +316,29 @@ function RoutineForm({ onAddRoutine, onCancel }) {
         <p>Create a routine and add the tasks inside it.</p>
 
         <form onSubmit={handleSubmit}>
-          <label className="form-label">
-            Routine Name
-          </label>
+          <label className="form-label">Routine Name</label>
 
           <input
             className="task-input"
             type="text"
             placeholder="e.g. Morning Routine"
             value={routineName}
-            onChange={(event) =>
-              setRoutineName(event.target.value)
-            }
+            onChange={(event) => setRoutineName(event.target.value)}
             autoFocus
           />
 
-          <label className="form-label">
-            Routine Tasks
-          </label>
+          <label className="form-label">Routine Tasks</label>
 
           <div className="routine-task-list">
             {routineTasks.map((task, index) => (
-              <div
-                className="routine-task-input"
-                key={index}
-              >
+              <div className="routine-task-input" key={index}>
                 <input
                   className="task-input"
                   type="text"
                   placeholder={`Task ${index + 1}`}
                   value={task}
                   onChange={(event) =>
-                    handleTaskChange(
-                      index,
-                      event.target.value
-                    )
+                    handleTaskChange(index, event.target.value)
                   }
                 />
 
@@ -362,9 +346,7 @@ function RoutineForm({ onAddRoutine, onCancel }) {
                   <button
                     className="remove-task-button"
                     type="button"
-                    onClick={() =>
-                      removeTaskField(index)
-                    }
+                    onClick={() => removeTaskField(index)}
                   >
                     ×
                   </button>
@@ -381,18 +363,11 @@ function RoutineForm({ onAddRoutine, onCancel }) {
             + Add Task
           </button>
 
-          <button
-            className="create-task-button"
-            type="submit"
-          >
+          <button className="create-task-button" type="submit">
             Create Routine
           </button>
 
-          <button
-            className="cancel-button"
-            type="button"
-            onClick={onCancel}
-          >
+          <button className="cancel-button" type="button" onClick={onCancel}>
             Cancel
           </button>
         </form>
