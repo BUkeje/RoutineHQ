@@ -1,193 +1,236 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home({
   tasks,
   routines,
   onToggleTask,
   onToggleRoutineTask,
-  onToggleRoutineComplete,
   onDeleteTask,
-  onDeleteRoutine,
   onNewTask,
   onNewRoutine,
 }) {
-  const incompleteTasks = tasks.filter((task) => !task.completed);
+  const completedTasks = tasks.filter((task) => task.completed).length;
 
-  const activeRoutines = routines.filter(
-    (routine) => !routine.tasks.every((task) => task.completed),
-  );
+  const completedRoutines = routines.filter((routine) =>
+    routine.tasks.every((task) => task.completed),
+  ).length;
 
-  const [expandedRoutine, setExpandedRoutine] = useState(null);
+  const totalItems =
+    tasks.length +
+    routines.reduce((total, routine) => total + routine.tasks.length, 0);
 
-  function toggleRoutine(routineId) {
-    setExpandedRoutine(expandedRoutine === routineId ? null : routineId);
+  const completedItems =
+    completedTasks +
+    routines.reduce(
+      (total, routine) =>
+        total + routine.tasks.filter((task) => task.completed).length,
+      0,
+    );
+
+  const dailyProgress =
+    totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100);
+
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
+
+  const currentHour = new Date().getHours();
+
+  let greeting;
+
+  if (currentHour < 12) {
+    greeting = "Good morning";
+  } else if (currentHour < 18) {
+    greeting = "Good afternoon";
+  } else {
+    greeting = "Good evening";
   }
 
   return (
     <main className="dashboard">
-      <section className="dashboard-header">
-        <h1>Dashboard</h1>
-        <p>Stay on top of your routines and tasks.</p>
-      </section>
-
-      <section className="dashboard-overview">
-        <div className="dashboard-card">
-          <p className="card-label">ROUTINES</p>
-          <h2>
-            {activeRoutines.length}{" "}
-            {activeRoutines.length === 1 ? "Active Routine" : "Active Routines"}
-          </h2>
-          <button className="card-link">View Routines →</button>
+      {/* Greeting */}
+      <section className="dashboard-greeting">
+        <div>
+          <h1>{greeting} 👋</h1>
         </div>
 
-        <div className="dashboard-card">
-          <p className="card-label">TASKS</p>
-          <h2>
-            {incompleteTasks.length}{" "}
-            {incompleteTasks.length === 1 ? "Task" : "Tasks"} Today
-          </h2>
-          <button className="card-link">View Tasks →</button>
+        <div className="dashboard-date">
+          <strong>{today}</strong>
         </div>
       </section>
 
-      <section className="today-section">
-        <h2>Routines / Tasks</h2>
+      {/* Statistics */}
+      <section className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon green">✓</div>
 
-        <h3 className="focus-label">ROUTINES</h3>
+          <div>
+            <h2>
+              {completedTasks} / {tasks.length}
+            </h2>
+            <p>Tasks completed</p>
+          </div>
+        </div>
 
-        <div className="focus-card">
-          {routines.length === 0 ? (
-            <div className="empty-tasks">
-              No routines yet. Create your first routine.
-            </div>
-          ) : (
-            routines.map((routine) => {
-              const completedCount = routine.tasks.filter(
-                (task) => task.completed,
-              ).length;
+        <div className="stat-card">
+          <div className="stat-icon purple">◎</div>
 
-              const isRoutineCompleted = routine.tasks.every(
-                (task) => task.completed,
-              );
+          <div>
+            <h2>
+              {completedRoutines} / {routines.length}
+            </h2>
+            <p>Routines completed</p>
+          </div>
+        </div>
 
-              const isExpanded = expandedRoutine === routine.id;
+        <div className="stat-card">
+          <div className="stat-icon orange">▣</div>
 
-              return (
-                <div className="routine-item" key={routine.id}>
-                  <div
-                    className={`routine-header ${
-                      isRoutineCompleted ? "completed" : ""
-                    }`}
-                  >
-                    <button
-                      className="task-checkbox routine-checkbox"
-                      onClick={() => onToggleRoutineComplete(routine.id)}
-                    >
-                      {isRoutineCompleted ? "✓" : ""}
-                    </button>
+          <div>
+            <h2>{tasks.length}</h2>
+            <p>Total tasks</p>
+          </div>
+        </div>
 
-                    <button
-                      className="routine-expand-button"
-                      onClick={() => toggleRoutine(routine.id)}
-                    >
-                      <div className="routine-title">
-                        <span className="routine-arrow">
-                          {isExpanded ? "▾" : "▸"}
-                        </span>
+        <div className="stat-card">
+          <div className="stat-icon pink">↗</div>
 
-                        <span>{routine.name}</span>
-                      </div>
+          <div>
+            <h2>{dailyProgress}%</h2>
+            <p>Daily progress</p>
+          </div>
+        </div>
+      </section>
 
-                      <span className="routine-progress">
-                        {completedCount} / {routine.tasks.length}
+      {/* Routines + Tasks */}
+      <section className="dashboard-content">
+        {/* Routines */}
+        <div className="dashboard-panel">
+          <div className="panel-header">
+            <h2>Today's Routines</h2>
+
+            <Link to="/routines">View all →</Link>
+          </div>
+
+          <div className="routine-dashboard-list">
+            {routines.length === 0 ? (
+              <p className="empty-message">No routines yet.</p>
+            ) : (
+              routines.map((routine) => {
+                const completedCount = routine.tasks.filter(
+                  (task) => task.completed,
+                ).length;
+
+                const progress =
+                  routine.tasks.length === 0
+                    ? 0
+                    : (completedCount / routine.tasks.length) * 100;
+
+                return (
+                  <div className="dashboard-routine" key={routine.id}>
+                    <div className="dashboard-routine-info">
+                      <strong>{routine.name}</strong>
+
+                      <span>
+                        {completedCount} / {routine.tasks.length} completed
                       </span>
-                    </button>
 
-                    <button
-                      className="delete-button"
-                      onClick={() => onDeleteRoutine(routine.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-
-                  {isExpanded && (
-                    <div className="routine-tasks">
-                      {routine.tasks.map((task) => (
+                      <div className="progress-bar">
                         <div
-                          className={`routine-task ${
-                            task.completed ? "completed" : ""
-                          }`}
-                          key={task.id}
-                        >
-                          <button
-                            className="task-checkbox"
-                            onClick={() =>
-                              onToggleRoutineTask(routine.id, task.id)
-                            }
-                          >
-                            {task.completed ? "✓" : ""}
-                          </button>
-
-                          <span className="task-name">{task.name}</span>
-                        </div>
-                      ))}
+                          className="progress-fill"
+                          style={{
+                            width: `${progress}%`,
+                          }}
+                        />
+                      </div>
                     </div>
-                  )}
-                </div>
-              );
-            })
-          )}
+
+                    <Link className="routine-arrow-button" to="/routines">
+                      ›
+                    </Link>
+                  </div>
+                );
+              })
+            )}
+          </div>
         </div>
 
-        <h3 className="focus-label">TASKS</h3>
+        {/* Tasks */}
+        <div className="dashboard-panel">
+          <div className="panel-header">
+            <h2>Today's Tasks</h2>
 
-        <div className="focus-card">
-          {tasks.length === 0 ? (
-            <div className="empty-tasks">
-              No tasks yet. Create your first task.
-            </div>
-          ) : (
-            tasks.map((task) => (
-              <div
-                className={`focus-item ${task.completed ? "completed" : ""}`}
-                key={task.id}
-              >
-                <button
-                  className="task-checkbox"
-                  onClick={() => onToggleTask(task.id)}
+            <Link to="/tasks">View all →</Link>
+          </div>
+
+          <div className="dashboard-task-list">
+            {tasks.length === 0 ? (
+              <p className="empty-message">No tasks yet.</p>
+            ) : (
+              tasks.map((task) => (
+                <div
+                  className={`dashboard-task ${
+                    task.completed ? "completed" : ""
+                  }`}
+                  key={task.id}
                 >
-                  {task.completed ? "✓" : ""}
-                </button>
+                  <button
+                    className="task-checkbox"
+                    onClick={() => onToggleTask(task.id)}
+                  >
+                    {task.completed ? "✓" : ""}
+                  </button>
 
-                <span className="task-name">{task.name}</span>
+                  <span className="task-name">{task.name}</span>
 
-                <button
-                  className="delete-button"
-                  onClick={() => onDeleteTask(task.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            ))
-          )}
+                  <button
+                    className="delete-button"
+                    onClick={() => onDeleteTask(task.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </section>
 
-      <section className="quick-create">
-        <h2>Quick Create</h2>
+      {/* Quick Create */}
+      <section className="quick-create-panel">
+        <div className="quick-create-header">
+          <div className="quick-create-icon">+</div>
 
-        <div className="quick-create-grid">
-          <button className="create-card" onClick={onNewRoutine}>
-            <strong>+ New Routine</strong>
-            <span>Build a repeatable set of tasks.</span>
+          <div>
+            <h2>Quick Create</h2>
+            <p>Add a new task or routine in seconds.</p>
+          </div>
+        </div>
+
+        <div className="quick-create-buttons">
+          <button className="quick-task-button" onClick={onNewTask}>
+            + New Task
           </button>
 
-          <button className="create-card" onClick={onNewTask}>
-            <strong>+ New Task</strong>
-            <span>Add something you need to get done.</span>
+          <button className="quick-routine-button" onClick={onNewRoutine}>
+            + New Routine
           </button>
         </div>
+      </section>
+
+      {/* Dashboard Footer */}
+      <section className="dashboard-footer">
+        <div className="footer-left">
+          <div className="footer-logo">
+            Routine<span>HQ</span>
+          </div>
+
+          <h2>Build better days.</h2>
+        </div>
+
+        <span className="footer-message">Progress over perfection.</span>
       </section>
     </main>
   );

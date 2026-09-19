@@ -1,4 +1,6 @@
-/* ---------- Global ---------- */
+/* =========================
+   GLOBAL
+   ========================= */
 
 * {
   box-sizing: border-box;
@@ -9,8 +11,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
 
-  background-color: #18191b;
-  color: #f5f5f5;
+  background: #0d1218;
+  color: #f5f7fa;
 
   font-family:
     Inter,
@@ -21,74 +23,121 @@ body {
     sans-serif;
 }
 
-/* ---------- Navbar ---------- */
+/* =========================
+   NAVBAR
+   ========================= */
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
 
-  margin: 20px 32px;
-  padding: 14px 20px;
+  width: 100%;
+  min-height: 82px;
+  padding: 0 5%;
 
-  background-color: #222326;
-
-  border: 1px solid #303136;
-  border-radius: 14px;
+  background: #0f141a;
+  border-bottom: 1px solid #29313c;
 }
 
-/* RoutineHQ Logo */
+/* Logo */
 
 .navbar-logo {
-  margin: 0;
+  justify-self: start;
 
-  font-size: 22px;
+  color: #f4f6fa;
+
+  font-size: 25px;
   font-weight: 700;
-  letter-spacing: -1px;
+  letter-spacing: -0.6px;
+
+  text-decoration: none;
 }
 
-/* Navbar Links */
+.navbar-logo span {
+  color: #7765e8;
+}
+
+/* Navigation */
 
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  justify-self: center;
+  gap: 14px;
 }
 
-.navbar-links a {
-  color: #b8b8b8;
+.nav-link {
+  padding: 11px 18px;
 
-  text-decoration: none;
+  color: #9ca5b4;
+
+  border-radius: 10px;
+
   font-size: 15px;
   font-weight: 500;
 
-  transition: color 0.2s ease;
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-.navbar-links a:hover {
+.nav-link:hover {
+  color: #f5f7fa;
+  background-color: #181e25;
+}
+
+.navbar-links .nav-link.active {
+  background-color: #252c36;
   color: #ffffff;
 }
 
 /* New Button */
 
 .new-button {
-  padding: 9px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 
-  background-color: #f5f5f5;
-  color: #18191b;
+  justify-self: end;
+
+  padding: 11px 20px;
+
+  background: linear-gradient(135deg, #4488f4, #7657e8);
+  color: white;
 
   border: none;
-  border-radius: 8px;
+  border-radius: 11px;
 
+  font-size: 15px;
   font-weight: 600;
+
   cursor: pointer;
+
+  box-shadow: 0 5px 18px rgba(87, 99, 230, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 }
 
 .new-button:hover {
-  background-color: #dcdcdc;
+  transform: translateY(-1px);
+  filter: brightness(1.08);
 }
 
-/* ---------- Main Page ---------- */
+.new-button-plus {
+  font-size: 23px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* =========================
+   SHARED PAGE STYLES
+   ========================= */
 
 main {
   margin: 50px auto;
@@ -106,160 +155,481 @@ main p {
   color: #999;
 }
 
-/* ---------- Dashboard ---------- */
+/* =========================
+   HOME DASHBOARD
+   ========================= */
 
 .dashboard {
-  max-width: 1100px;
-  margin: 50px auto;
-  padding: 0 32px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 55px 32px 20px;
 }
 
-.dashboard-header {
-  margin-bottom: 32px;
+/* ---------- Greeting ---------- */
+
+.dashboard-greeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 36px;
 }
 
-.dashboard-header h1 {
+.dashboard-greeting h1 {
   margin: 0;
-  font-size: 32px;
+
+  font-size: 42px;
+  letter-spacing: -1px;
 }
 
-.dashboard-header p {
-  margin-top: 8px;
-  color: #999;
+.dashboard-greeting p {
+  margin: 8px 0 0;
+
+  color: #969dab;
+  font-size: 18px;
 }
 
-/* Overview Cards */
+.dashboard-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
 
-.dashboard-overview {
+.dashboard-date strong {
+  color: #b9c0d0;
+  font-size: 17px;
+}
+
+.dashboard-date span {
+  color: #777f8f;
+  font-size: 14px;
+}
+
+/* ---------- Stats ---------- */
+
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  margin-bottom: 26px;
 }
 
-.dashboard-card {
-  padding: 24px;
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 
-  background-color: #222326;
-  border: 1px solid #303136;
+  min-height: 125px;
+  padding: 22px;
+
+  background: #171c23;
+
+  border: 1px solid #29313c;
   border-radius: 14px;
 }
 
-.card-label {
-  margin: 0 0 12px;
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 1px;
+.stat-card h2 {
+  margin: 0 0 4px;
+  font-size: 24px;
 }
 
-.dashboard-card h2 {
-  margin: 0 0 24px;
-  font-size: 20px;
+.stat-card p {
+  margin: 0;
+
+  color: #939baa;
+  font-size: 14px;
 }
 
-.card-link {
-  padding: 0;
-  background: none;
-  border: none;
+.stat-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  color: #bbb;
-  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  font-size: 22px;
+  font-weight: 700;
 }
 
-.card-link:hover {
-  color: white;
+.stat-icon.green {
+  background: #36d9a0;
+  color: #092d22;
 }
 
-/* Today's Focus */
-
-.today-section {
-  margin-top: 40px;
+.stat-icon.purple {
+  background: #5944a8;
+  color: #c4b6ff;
 }
 
-.today-section h2,
-.quick-create h2 {
-  margin-bottom: 16px;
-  font-size: 20px;
+.stat-icon.orange {
+  background: #5b4024;
+  color: #f3ad52;
 }
 
-.focus-card {
-  background-color: #222326;
-  border: 1px solid #303136;
+.stat-icon.pink {
+  background: #663344;
+  color: #ff809c;
+}
+
+/* ---------- Main Dashboard Panels ---------- */
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.dashboard-panel {
+  padding: 20px;
+
+  background: #151a20;
+
+  border: 1px solid #29313c;
   border-radius: 14px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.panel-header a {
+  color: #6ca7ff;
+
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.panel-header a:hover {
+  color: #91bdff;
+}
+
+/* ---------- Dashboard Routines ---------- */
+
+.routine-dashboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-routine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 16px;
+
+  background: #181e25;
+
+  border: 1px solid #29313c;
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+.dashboard-routine-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  align-items: flex-start;
+  text-align: left;
+}
+
+.dashboard-routine-info strong {
+  font-size: 15px;
+}
+
+.dashboard-routine-info span {
+  margin-top: 5px;
+
+  color: #929aaa;
+  font-size: 13px;
+}
+
+.progress-bar {
+  width: 90%;
+  height: 6px;
+
+  margin-top: 10px;
+
+  background: #343d4a;
+
+  border-radius: 999px;
 
   overflow: hidden;
 }
 
-.focus-item {
-  display: flex;
-  justify-content: space-between;
+.progress-fill {
+  height: 100%;
 
-  padding: 18px 20px;
-  border-bottom: 1px solid #303136;
+  background: #36d9a0;
+
+  border-radius: inherit;
+
+  transition: width 0.3s ease;
 }
 
-.focus-item:last-child {
+.routine-arrow-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  background: #29313c;
+  color: #e6e9ef;
+
+  border-radius: 50%;
+
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.routine-arrow-button:hover {
+  background: #343e4b;
+}
+
+/* ---------- Dashboard Tasks ---------- */
+
+.dashboard-task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 58px;
+  padding: 12px 4px;
+
+  border-bottom: 1px solid #262d36;
+}
+
+.dashboard-task:last-child {
   border-bottom: none;
 }
 
-.focus-label {
-  margin: 22px 0 10px;
-
-  color: #777;
-
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
+.dashboard-task .delete-button {
+  margin-left: auto;
 }
 
-/* Quick Create */
+/* ---------- Quick Create ---------- */
 
-.quick-create {
-  margin-top: 40px;
-}
+.quick-create-panel {
+  margin-top: 22px;
+  padding: 24px;
 
-.quick-create-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
+  background: #151a20;
 
-.create-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-
-  padding: 22px;
-
-  background-color: #222326;
-  color: white;
-
-  border: 1px solid #303136;
+  border: 1px solid #29313c;
   border-radius: 14px;
-
-  text-align: left;
-  cursor: pointer;
-
-  transition:
-    border-color 0.2s ease,
-    transform 0.2s ease;
 }
 
-.create-card:hover {
-  border-color: #555;
-  transform: translateY(-2px);
+.quick-create-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.create-card strong {
-  font-size: 16px;
+.quick-create-header h2 {
+  margin: 0;
+  font-size: 18px;
 }
 
-.create-card span {
-  color: #999;
+.quick-create-header p {
+  margin: 5px 0 0;
+
+  color: #929aaa;
   font-size: 14px;
 }
 
-/* ---------- New Modal ---------- */
+.quick-create-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  background: #7657e8;
+
+  border-radius: 50%;
+
+  font-size: 24px;
+}
+
+.quick-create-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  margin-top: 22px;
+}
+
+.quick-create-buttons button {
+  padding: 17px;
+
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.quick-create-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.quick-task-button {
+  background: linear-gradient(135deg, #167b5e, #209a72);
+}
+
+.quick-routine-button {
+  background: linear-gradient(135deg, #4b42a8, #6252c7);
+}
+
+/* ---------- Empty State ---------- */
+
+.empty-message {
+  margin: 20px 0;
+
+  color: #747c89;
+
+  text-align: center;
+}
+
+/* ---------- Dashboard Footer ---------- */
+
+.dashboard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-top: 32px;
+  padding: 30px 4px 0;
+
+  border-top: 1px solid #29313c;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  text-align: left;
+}
+
+.footer-logo {
+  margin-bottom: 10px;
+
+  color: #f4f6fa;
+
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.footer-logo span {
+  color: #7765e8;
+}
+
+.footer-left h2 {
+  margin: 0 0 2px;
+
+  color: #69727f;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.footer-left p {
+  margin: 0;
+
+  color: #747d89;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-message {
+  color: #69727f;
+
+  font-size: 13px;
+}
+
+/* ---------- Home Responsive ---------- */
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 35px 18px 20px;
+  }
+
+  .dashboard-greeting {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .dashboard-date {
+    align-items: flex-start;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-create-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+/* =========================
+   NEW MODAL
+   ========================= */
 
 .modal-overlay {
   position: fixed;
@@ -293,7 +663,7 @@ main p {
   color: #999;
 }
 
-/* Creation Options */
+/* ---------- Creation Options ---------- */
 
 .new-options {
   display: flex;
@@ -333,7 +703,7 @@ main p {
   font-size: 13px;
 }
 
-/* Cancel */
+/* ---------- Cancel Button ---------- */
 
 .cancel-button {
   width: 100%;
@@ -353,7 +723,9 @@ main p {
   color: white;
 }
 
-/* ---------- Task Form ---------- */
+/* =========================
+   TASK FORM
+   ========================= */
 
 .form-label {
   display: block;
@@ -413,7 +785,9 @@ main p {
   text-align: center;
 }
 
-/* ---------- Task Checkbox ---------- */
+/* =========================
+   TASK CHECKBOX
+   ========================= */
 
 .focus-item {
   display: flex;
@@ -422,6 +796,7 @@ main p {
   gap: 12px;
 
   padding: 18px 20px;
+
   border-bottom: 1px solid #303136;
 }
 
@@ -430,31 +805,37 @@ main p {
   justify-content: center;
   align-items: center;
 
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   padding: 0;
-
   flex-shrink: 0;
 
   background-color: transparent;
-  color: #18191b;
+  color: #092d22;
 
-  border: 1px solid #666;
-  border-radius: 6px;
+  border: 1px solid #56606d;
+  border-radius: 50%;
 
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .task-checkbox:hover {
-  border-color: #aaa;
+  border-color: #36d9a0;
 }
 
 .completed .task-checkbox {
-  background-color: #f5f5f5;
-  border-color: #f5f5f5;
+  background-color: #36d9a0;
+  color: #092d22;
+
+  border-color: #36d9a0;
 }
 
 .task-name {
@@ -466,7 +847,9 @@ main p {
   text-decoration: line-through;
 }
 
-/* ---------- Routine Form ---------- */
+/* =========================
+   ROUTINE FORM
+   ========================= */
 
 .routine-task-list {
   display: flex;
@@ -529,7 +912,9 @@ main p {
   margin-right: 12px;
 }
 
-/* ---------- Expandable Routines ---------- */
+/* =========================
+   EXPANDABLE ROUTINES
+   ========================= */
 
 .routine-item {
   border-bottom: 1px solid #303136;
@@ -590,6 +975,10 @@ main p {
   font-size: 14px;
 }
 
+/* =========================
+   DELETE BUTTON
+   ========================= */
+
 .delete-button {
   margin-left: auto;
   padding: 6px 10px;
@@ -602,6 +991,7 @@ main p {
 
   font-size: 13px;
   font-weight: 500;
+
   cursor: pointer;
 
   transition:
@@ -614,7 +1004,7 @@ main p {
   color: #ff8a8a;
 }
 
-/* Tasks inside a routine */
+/* ---------- Tasks Inside Routine ---------- */
 
 .routine-tasks {
   padding: 4px 20px 14px 44px;
@@ -630,10 +1020,13 @@ main p {
   color: #bbb;
 }
 
-/* ---------- Routines Page ---------- */
+/* =========================
+   ROUTINES PAGE
+   ========================= */
 
 .routines-page {
   max-width: 1100px;
+
   margin: 50px auto;
   padding: 0 32px 60px;
 }
@@ -685,6 +1078,7 @@ main p {
 
 .routine-page-title h2 {
   margin: 0;
+
   font-size: 16px;
   font-weight: 500;
 }
@@ -723,10 +1117,13 @@ main p {
   color: #888;
 }
 
-/* ---------- Tasks Page ---------- */
+/* =========================
+   TASKS PAGE
+   ========================= */
 
 .tasks-page {
   max-width: 1100px;
+
   margin: 50px auto;
   padding: 0 32px 60px;
 }
@@ -745,6 +1142,7 @@ main p {
   padding: 18px 20px;
 
   background-color: #222326;
+
   border: 1px solid #303136;
   border-radius: 14px;
 }
@@ -753,4 +1151,33 @@ main p {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* =========================
+   NAVBAR RESPONSIVE
+   ========================= */
+
+@media (max-width: 700px) {
+  .navbar {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 18px;
+  }
+
+  .navbar-links {
+    gap: 4px;
+  }
+
+  .nav-link {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .navbar-logo {
+    font-size: 20px;
+  }
+
+  .new-button {
+    padding: 9px 13px;
+    font-size: 13px;
+  }
 }

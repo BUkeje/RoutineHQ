@@ -151,11 +151,9 @@ function App() {
                 tasks={tasks}
                 routines={routines}
                 onToggleTask={toggleTask}
-                onToggleRoutineTask={toggleRoutineTask}
-                onToggleRoutineComplete={toggleRoutineComplete}
                 onDeleteTask={deleteTask}
-                onDeleteRoutine={deleteRoutine}
                 onNewTask={openTaskForm}
+                onNewRoutine={openRoutineForm}
               />
             }
           />
