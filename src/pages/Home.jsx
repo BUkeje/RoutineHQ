@@ -51,7 +51,7 @@ function Home({
       </section>
 
       <section className="today-section">
-        <h2>Today's Focus</h2>
+        <h2>Routines / Tasks</h2>
 
         <h3 className="focus-label">ROUTINES</h3>
 
