@@ -227,19 +227,6 @@ function Home({
           </button>
         </div>
       </section>
-
-      {/* Dashboard Footer */}
-      <section className="dashboard-footer">
-        <div className="footer-left">
-          <div className="footer-logo">
-            Routine<span>HQ</span>
-          </div>
-
-          <h2>Build better days.</h2>
-        </div>
-
-        <span className="footer-message">Progress over perfection.</span>
-      </section>
     </main>
   );
 }

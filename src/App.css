@@ -526,65 +526,6 @@ main p {
   text-align: center;
 }
 
-/* ---------- Dashboard Footer ---------- */
-
-.dashboard-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  margin-top: 32px;
-  padding: 30px 4px 0;
-
-  border-top: 1px solid #29313c;
-}
-
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  text-align: left;
-}
-
-.footer-logo {
-  margin-bottom: 10px;
-
-  color: #f4f6fa;
-
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.6px;
-}
-
-.footer-logo span {
-  color: #7765e8;
-}
-
-.footer-left h2 {
-  margin: 0 0 2px;
-
-  color: #69727f;
-
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.footer-left p {
-  margin: 0;
-
-  color: #747d89;
-
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.footer-message {
-  color: #69727f;
-
-  font-size: 13px;
-}
-
 /* ---------- Home Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -618,12 +559,6 @@ main p {
 
   .quick-create-buttons {
     grid-template-columns: 1fr;
-  }
-
-  .dashboard-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
   }
 }
 
