@@ -947,7 +947,7 @@ main p {
   margin-left: 15px;
   margin-right: 10px;
 
-  color: #888;
+  color: #ffffff;
   font-size: 14px;
 }
 
@@ -1075,7 +1075,7 @@ main p {
 
 .routine-page-tasks {
   margin-top: 16px;
-  padding: 12px 0 0 15px;
+  padding: 12px 0 0 18px;
 
   border-top: 1px solid #303136;
 }
