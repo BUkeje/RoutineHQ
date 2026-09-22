@@ -48,6 +48,14 @@ function Home({
     greeting = "Good evening";
   }
 
+  const currentDay = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  });
+
+  const todaysRoutines = routines.filter((routine) =>
+    routine.days?.includes(currentDay),
+  );
+
   return (
     <main className="dashboard">
       {/* Greeting */}
@@ -115,10 +123,10 @@ function Home({
           </div>
 
           <div className="routine-dashboard-list">
-            {routines.length === 0 ? (
-              <p className="empty-message">No routines yet.</p>
+            {todaysRoutines.length === 0 ? (
+              <p className="empty-message">No routines scheduled for today.</p>
             ) : (
-              routines.map((routine) => {
+              todaysRoutines.map((routine) => {
                 const completedCount = routine.tasks.filter(
                   (task) => task.completed,
                 ).length;

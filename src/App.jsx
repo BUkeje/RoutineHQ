@@ -126,15 +126,15 @@ function App() {
     setShowRoutineForm(false);
   }
 
-  function addRoutine(routineName, routineTasks) {
+  function addRoutine(routineName, routineTasks, selectedDays) {
     const newRoutine = {
       id: Date.now(),
       name: routineName,
+      days: selectedDays,
       tasks: routineTasks,
     };
 
     setRoutines([...routines, newRoutine]);
-
     setShowRoutineForm(false);
   }
 
@@ -265,6 +265,37 @@ function RoutineForm({ onAddRoutine, onCancel }) {
   const [routineName, setRoutineName] = useState("");
   const [routineTasks, setRoutineTasks] = useState([""]);
 
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+  const [selectedDays, setSelectedDays] = useState([]);
+  const allDaysSelected = selectedDays.length === daysOfWeek.length;
+
+  function toggleDay(day) {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(
+        selectedDays.filter((selectedDay) => selectedDay !== day),
+      );
+    } else {
+      setSelectedDays([...selectedDays, day]);
+    }
+  }
+
+  function toggleAllDays() {
+    if (allDaysSelected) {
+      setSelectedDays([]);
+    } else {
+      setSelectedDays(daysOfWeek);
+    }
+  }
+
   function handleTaskChange(index, value) {
     const updatedTasks = [...routineTasks];
 
@@ -304,7 +335,7 @@ function RoutineForm({ onAddRoutine, onCancel }) {
       return;
     }
 
-    onAddRoutine(routineName.trim(), validTasks);
+    onAddRoutine(routineName.trim(), validTasks, selectedDays);
   }
 
   return (
@@ -324,6 +355,33 @@ function RoutineForm({ onAddRoutine, onCancel }) {
             onChange={(event) => setRoutineName(event.target.value)}
             autoFocus
           />
+
+          <label className="form-label">Repeat On</label>
+
+          <div className="repeat-days">
+            <button
+              type="button"
+              className={`day-button all-days-button ${
+                allDaysSelected ? "selected" : ""
+              }`}
+              onClick={toggleAllDays}
+            >
+              All
+            </button>
+
+            {daysOfWeek.map((day) => (
+              <button
+                key={day}
+                type="button"
+                className={`day-button ${
+                  selectedDays.includes(day) ? "selected" : ""
+                }`}
+                onClick={() => toggleDay(day)}
+              >
+                {day.slice(0, 3)}
+              </button>
+            ))}
+          </div>
 
           <label className="form-label">Routine Tasks</label>
 

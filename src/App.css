@@ -912,6 +912,46 @@ main p {
   margin-right: 12px;
 }
 
+.repeat-days {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+
+  margin-bottom: 20px;
+}
+
+.day-button {
+  padding: 9px 4px;
+
+  background: #292a2e;
+  color: #929aaa;
+
+  border: 1px solid #38393e;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.day-button:hover {
+  color: white;
+  border-color: #7657e8;
+}
+
+.day-button.selected {
+  background: #7657e8;
+  color: white;
+
+  border-color: #7657e8;
+}
+
 /* =========================
    EXPANDABLE ROUTINES
    ========================= */
