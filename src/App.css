@@ -944,6 +944,7 @@ main p {
 }
 
 .routine-progress {
+  margin-left: 15px;
   margin-right: 10px;
 
   color: #888;
@@ -993,6 +994,13 @@ main p {
   padding: 10px 0;
 
   color: #bbb;
+}
+
+.routine-task .task-checkbox {
+  width: 14px;
+  height: 14px;
+
+  font-size: 10px;
 }
 
 /* =========================
@@ -1047,8 +1055,9 @@ main p {
 
 .routine-page-title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
+  flex: 1;
 }
 
 .routine-page-title h2 {
@@ -1061,12 +1070,12 @@ main p {
 .routine-page-actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 5px;
 }
 
 .routine-page-tasks {
   margin-top: 16px;
-  padding-top: 12px;
+  padding: 12px 0 0 15px;
 
   border-top: 1px solid #303136;
 }
@@ -1090,6 +1099,22 @@ main p {
 .empty-page p {
   margin: 0;
   color: #888;
+}
+
+.routine-title-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  text-align: left;
+}
+
+.routine-schedule {
+  color: #7f8896;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
 }
 
 /* =========================

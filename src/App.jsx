@@ -7,6 +7,10 @@ import Home from "./pages/Home";
 import Routines from "./pages/Routines";
 import Tasks from "./pages/Tasks";
 
+function getTodayDate() {
+  return new Date().toLocaleDateString("en-CA");
+}
+
 function App() {
   const [showNewMenu, setShowNewMenu] = useState(false);
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -23,6 +27,27 @@ function App() {
 
     return savedRoutines ? JSON.parse(savedRoutines) : [];
   });
+
+  useEffect(() => {
+    const today = getTodayDate();
+
+    setRoutines((currentRoutines) =>
+      currentRoutines.map((routine) => {
+        if (routine.lastActiveDate !== today) {
+          return {
+            ...routine,
+            lastActiveDate: today,
+            tasks: routine.tasks.map((task) => ({
+              ...task,
+              completed: false,
+            })),
+          };
+        }
+
+        return routine;
+      }),
+    );
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -131,6 +156,7 @@ function App() {
       id: Date.now(),
       name: routineName,
       days: selectedDays,
+      lastActiveDate: getTodayDate(),
       tasks: routineTasks,
     };
 

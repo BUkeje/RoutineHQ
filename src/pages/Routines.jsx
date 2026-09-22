@@ -4,6 +4,17 @@ function Routines({
   onToggleRoutineComplete,
   onDeleteRoutine,
 }) {
+  function formatSchedule(days) {
+    if (!days || days.length === 0) {
+      return "No schedule";
+    }
+
+    if (days.length === 7) {
+      return "Every day";
+    }
+
+    return days.map((day) => day.slice(0, 3)).join(" · ");
+  }
   return (
     <main className="routines-page">
       <section className="page-header">
@@ -43,7 +54,13 @@ function Routines({
                       {isCompleted ? "✓" : ""}
                     </button>
 
-                    <h2>{routine.name}</h2>
+                    <div className="routine-title-info">
+                      <h2>{routine.name}</h2>
+
+                      <span className="routine-schedule">
+                        {formatSchedule(routine.days)}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="routine-page-actions">
